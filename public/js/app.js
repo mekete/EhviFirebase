@@ -37,7 +37,7 @@ function getUiConfig() {
             firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM
     };
 }
- 
+
 
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -109,35 +109,35 @@ var handleSignedInUser = function (user) {
 
 
 };
- 
- 
+
+
 
 
 /**
  * Displays the UI for a signed out user.
  */
 var handleSignedOutUser = function () {
-    var clientUser = (getItemFromLocalStorage(CURRENT_MODE) == CURRENT_MODE_CLIENT);
+    // var clientUser = (getItemFromLocalStorage(CURRENT_MODE) == CURRENT_MODE_CLIENT);
 
-    ui.start('#firebase_ui_login_container', getUiConfig());
-    //
-    if ($('#chat_section').length > 0) { $('#chat_section').hide(); }
-    if ($('#track_section').length > 0) { $('#track_section').hide(); }
+    // ui.start('#firebase_ui_login_container', getUiConfig());
+    // //
+    // if ($('#chat_section').length > 0) { $('#chat_section').hide(); }
+    // if ($('#track_section').length > 0) { $('#track_section').hide(); }
 
 
-    if ($('#track_motorist_activity_section').length > 0) { $('#track_motorist_activity_section').hide(); }
-    if ($('#firestore_logged_in_container').length > 0) { $('#firestore_logged_in_container').hide(); }
-    if ($('#track_branch_register_section').length > 0) { $('#track_branch_register_section').hide(); }
-    if ($('#track_branch_assign_section').length > 0) { $('#track_branch_assign_section').hide(); }
-    //
-    if ($('#login_section').length > 0) { $('#login_section').show(); }
-    if ($('#firestore_logged_out_container').length > 0) { $('#firestore_logged_out_container').show(); }
-    //
+    // if ($('#track_motorist_activity_section').length > 0) { $('#track_motorist_activity_section').hide(); }
+    // if ($('#firestore_logged_in_container').length > 0) { $('#firestore_logged_in_container').hide(); }
+    // if ($('#track_branch_register_section').length > 0) { $('#track_branch_register_section').hide(); }
+    // if ($('#track_branch_assign_section').length > 0) { $('#track_branch_assign_section').hide(); }
+    // //
+    // if ($('#login_section').length > 0) { $('#login_section').show(); }
+    // if ($('#firestore_logged_out_container').length > 0) { $('#firestore_logged_out_container').show(); }
+    // //
 
-    setItemOnLocalStorage(SESSION_VARIABLE_USER_UID, '');
-    setItemOnLocalStorage(SESSION_VARIABLE_USER_EMAIL, '');
-    setItemOnLocalStorage(SESSION_VARIABLE_USER_DISPLAY_NAME, '');
-    setItemOnLocalStorage(SESSION_VARIABLE_USER_ROLE, '');
+    // setItemOnLocalStorage(SESSION_VARIABLE_USER_UID, '');
+    // setItemOnLocalStorage(SESSION_VARIABLE_USER_EMAIL, '');
+    // setItemOnLocalStorage(SESSION_VARIABLE_USER_DISPLAY_NAME, '');
+    // setItemOnLocalStorage(SESSION_VARIABLE_USER_ROLE, '');
 
 };
 
@@ -155,7 +155,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 });
 
- 
+
 /**
  * Handles when the user changes the reCAPTCHA config.
  */
@@ -171,55 +171,44 @@ function handleRecaptchaConfigChange() {
 
 
 function getFirestoreCollectionReference(documentName) {
-    const firestore = firebase.firestore(); 
+    const firestore = firebase.firestore();
     return firestore.collection(documentName);
 }
-  
+
 
 
 function registerUpdateNotification() {
-    var user = firebase.auth().currentUser;
-    if (user != null) {
-        var latestVersionName = $('#txtf_notification_title').val();
-        var updateSummary = $('#txtf_notification_detail_message').val();
-        var updateLevel = $('#radb_update_major').is(':checked') ? UPDATE_LEVEL_MAJOR : UPDATE_LEVEL_MINOR  ;
+    var latestVersionName = $('#txtf_notification_title').val();
+    var updateSummary = $('#txtf_notification_detail_message').val();
+    var updateLevel = $('#radb_update_major').is(':checked') ? UPDATE_LEVEL_MAJOR : UPDATE_LEVEL_MINOR;
 
-        // 
-        if (!isAppUpdateDataValid()) {
-            console.log("Not Cool");
-            return;
-        }
-        var user = firebase.auth().currentUser;
-
-        var collectionRef = getFirestoreCollectionReference(FIRESTORE_DOCUMENT_BRANCH);
-        var appUpdateRef = collectionRef.doc();
-
-        appUpdateRef.set({
-            updateLevel: updateLevel,
-            latestVersionName: latestVersionName,
-            updateSummary: updateSummary,
-             //
-            createdDate: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedDate: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedBy: user.uid,
-            createdBy: user.uid
-
-
-        }).then(function () {
-            $('#txtf_notification_title').val('');
-            $('#txtf_notification_detail_message').val('');
-            // 
-            $("#radb_branch_type_client").attr('checked', true);
-
-        }).catch(function (error) {
-            console.log(error);
-        });
-    } else {
-        console.log("not signed in");
-        handleSignedOutUser();
-
-
+    // 
+    if (!isAppUpdateDataValid()) {
+        console.log("Emmm... Invalid data");
+        return;
     }
+
+    var collectionRef = getFirestoreCollectionReference(FIRESTORE_DOCUMENT_APP_VERSION);
+    var appUpdateRef = collectionRef.doc();
+
+    appUpdateRef.set({
+        updateLevel: updateLevel,
+        latestVersionName: latestVersionName,
+        updateSummary: updateSummary,
+        //
+        createdDate: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedDate: firebase.firestore.FieldValue.serverTimestamp()
+        //  
+
+
+    }).then(function () {
+        $('#txtf_notification_title').val('');
+        $('#txtf_notification_detail_message').val(''); 
+        $("#radb_update_minor").attr('checked', true);
+
+    }).catch(function (error) {
+        console.log(error);
+    }); 
 }
 
 
@@ -230,7 +219,7 @@ function isAppUpdateDataValid() {
     } else if (!$('#txtf_notification_detail_message').val()) {
         showWarningDataToast('Detail message is required.');
         return false;
-    }  
+    }
     return true;
 }
 
@@ -270,7 +259,7 @@ function showToast(toastMessage, toastStyle) {
     });
 }
 
- 
+
 
 function registerAppUserOnCLoud(user, providerName) {
 
@@ -329,12 +318,14 @@ function getItemFromLocalStorage(key) {
         return $.cookies.get(key);
     }
 }
-    
 
- 
+
+
 
 window.addEventListener('load', function () {
 
-    initChatLayoutComponents();
+    $("#btnn_send_now ").click(function () {
+        registerUpdateNotification();
+    }); 
 
 });
