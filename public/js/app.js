@@ -178,8 +178,11 @@ function getFirestoreCollectionReference(documentName) {
 
 
 function registerUpdateNotification() {
-    var latestVersionName = $('#txtf_notification_title').val();
-    var updateSummary = $('#txtf_notification_detail_message').val();
+   
+                
+    var versionName = $('#txtf_version_name').val();
+    var versionCode = $('#txtf_version_code').val();
+    var updateSummary = $('#txtf_update_summary').val();
     var updateLevel = $('#radb_update_major').is(':checked') ? UPDATE_LEVEL_MAJOR : UPDATE_LEVEL_MINOR;
 
     // 
@@ -192,9 +195,10 @@ function registerUpdateNotification() {
     var appUpdateRef = collectionRef.doc();
 
     appUpdateRef.set({
-        updateLevel: updateLevel,
-        latestVersionName: latestVersionName,
+        versionName: versionName,
+        versionCode: versionCode,
         updateSummary: updateSummary,
+        updateLevel: updateLevel,
         //
         createdDate: firebase.firestore.FieldValue.serverTimestamp(),
         updatedDate: firebase.firestore.FieldValue.serverTimestamp()
@@ -202,8 +206,8 @@ function registerUpdateNotification() {
 
 
     }).then(function () {
-        $('#txtf_notification_title').val('');
-        $('#txtf_notification_detail_message').val(''); 
+        $('#txtf_version_name').val('');
+        $('#txtf_update_summary').val(''); 
         $("#radb_update_minor").attr('checked', true);
 
     }).catch(function (error) {
@@ -213,10 +217,10 @@ function registerUpdateNotification() {
 
 
 function isAppUpdateDataValid() {
-    if (!$('#txtf_notification_title').val()) {
+    if (!$('#txtf_version_name').val()) {
         showWarningDataToast('Title is required.');
         return false;
-    } else if (!$('#txtf_notification_detail_message').val()) {
+    } else if (!$('#txtf_update_summary').val()) {
         showWarningDataToast('Detail message is required.');
         return false;
     }

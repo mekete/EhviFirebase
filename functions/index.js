@@ -37,7 +37,7 @@ function sendNotification(appVersion, appVersionUid, notificationTopic, priority
     const versionName = appVersion.versionName;
     const updateSummary = appVersion.updateSummary;
     const versionCode = appVersion.versionCode;
-    const updateSeverity = appVersion.updateSeverity;
+    const updateLevel = appVersion.updateLevel;
 
     const payload = {
         data: {
@@ -45,16 +45,16 @@ function sendNotification(appVersion, appVersionUid, notificationTopic, priority
             appVersionUid: appVersionUid,
             //
             versionName: versionName,
-            updateSummary: updateSummary,
             versionCode: versionCode,
-            updateSeverity: updateSeverity
+            updateSummary: updateSummary,
+            updateLevel: updateLevel
         }
     };
     console.log(
         "\n-------- UID              :: " + appVersion.versionName +
         "\n-------- notificationTopic:: " + notificationTopic +
         "\n-------- updateSummary    :: " + updateSummary +
-        "\n-------- updateSeverity   :: " + updateSeverity);
+        "\n-------- updateLevel   :: " + updateLevel);
 
     const options = {
         priority: priority,

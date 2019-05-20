@@ -1,6 +1,8 @@
 const UPDATE_LEVEL_MAJOR = "Major"; 
 const UPDATE_LEVEL_MINOR = "Minor";
 // 
+const NOTIFICATION_TOPIC_APPLICATION_UPDATE_ANDROID = "TopicAppUpdateAndroid";
+const NOTIFICATION_TOPIC_APPLICATION_UPDATE_IOS = "TopicAppUpdateIos";
 const FIRESTORE_DOCUMENT_APP_VERSION = "appVersion";
 // 
 

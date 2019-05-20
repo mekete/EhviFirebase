@@ -17,10 +17,12 @@
   <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.css" />
   <!--  -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
   <!--  -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    crossorigin="anonymous">
   <link rel="stylesheet" href="css/app.css">
 
   <script src="js/bootoast.js"></script>
@@ -33,20 +35,30 @@
 
 <body>
   <div id="message">
+
     <div class="form-group">
-      <label for="txtf_notification_title">Version Name (or Code)</label>
-      <input type="text" class="form-control" id="txtf_notification_title" aria-describedby="emailHelp" value="EVHI App Update">
-      <small id="emailHelp" class="form-text text-muted">It may be shown on locked screen.</small>
+      <label for="txtf_version_name">Version Name</label>
+      <input type="text" class="form-control" id="txtf_version_name" aria-describedby="emailHelp"
+        value="EVHI App Update">
+      <small id="emailHelp" class="form-text text-muted">Visible to end users.</small>
     </div>
     <div class="form-group">
-      <label for="txtf_notification_detail_message">Notification Detail</label>
-      <input type="text" class="form-control" lines="2" id="txtf_notification_detail_message" value="There is a new update available to update">
+      <label for="txtf_version_code">Version Code</label>
+      <input type="number" class="form-control" id="txtf_version_code" aria-describedby="emailHelp" value="1.0">
+      <small id="emailHelp" class="form-text text-muted">Google play version.</small>
+    </div>
+    <div class="form-group">
+      <label for="txtf_update_summary">Update Summary</label>
+      <input type="text" class="form-control" lines="2" id="txtf_update_summary"
+        value="There is a new update available to update">
     </div>
     <label for="btng_update_level">Update Level</label>
 
     <div class="btn-group form-group  w-100" id="btng_update_level">
-      <button type="button" class="btn btn-secondary" role="group"><input type="radio" name="optradio" id="radb_update_major"> Major </button>
-      <button type="button" class="btn btn-secondary" role="group"><input type="radio" name="optradio" id="radb_update_minor" checked="checked"> Minor </button>
+      <button type="button" class="btn btn-secondary" role="group"><input type="radio" name="optradio"
+          id="radb_update_major"> Major </button>
+      <button type="button" class="btn btn-secondary" role="group"><input type="radio" name="optradio"
+          id="radb_update_minor" checked="checked"> Minor </button>
     </div>
     <div class="form-group form-check">
       <input type="checkbox" class="form-check-input" id="ckbx_send_now">
