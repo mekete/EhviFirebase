@@ -71,7 +71,14 @@ var signInWithPopup = function () {
 };
 
 
-
+function signInUnonymosly(){
+    firebase.auth().signInAnonymously().catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+    });
+}
 
 /**
  * Displays the UI for a signed in user.
@@ -327,8 +334,8 @@ function getItemFromLocalStorage(key) {
 
 
 window.addEventListener('load', function () {
-
-    $("#btnn_send_now ").click(function () {
+    signInUnonymosly();
+    $("#btnn_send_now").click(function () {
         registerUpdateNotification();
     }); 
 
