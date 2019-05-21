@@ -1,4 +1,17 @@
 
+const UPDATE_LEVEL_MAJOR = "Major";
+const UPDATE_LEVEL_MINOR = "Minor";
+// 
+const NOTIFICATION_TOPIC_APPLICATION_UPDATE_ANDROID = "TopicAppUpdateAndroid";
+const NOTIFICATION_TOPIC_APPLICATION_UPDATE_IOS = "TopicAppUpdateIos";
+const FIRESTORE_DOCUMENT_APP_VERSION = "appVersion";
+// 
+
+const TOAST_STYLE_INFO = "info";
+const TOAST_STYLE_SUCCESS = "success";
+const TOAST_STYLE_WARNING = "warning";
+const TOAST_STYLE_DANGER = "danger";
+
 // ------------------------------------------------------------------------------------------------
 function getUiConfig() {
     return {
@@ -71,13 +84,18 @@ var signInWithPopup = function () {
 };
 
 
-function signInUnonymosly(){
-    firebase.auth().signInAnonymously().catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
-    });
+function signInUnanimously() {
+    var user = firebase.auth().currentUser;
+
+    if (!user) {
+
+        firebase.auth().signInAnonymously().catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+        });
+    }
 }
 
 /**
@@ -185,8 +203,8 @@ function getFirestoreCollectionReference(documentName) {
 
 
 function registerUpdateNotification() {
-   
-                
+
+
     var versionName = $('#txtf_version_name').val();
     var versionCode = $('#txtf_version_code').val();
     var updateSummary = $('#txtf_update_summary').val();
@@ -214,12 +232,12 @@ function registerUpdateNotification() {
 
     }).then(function () {
         $('#txtf_version_name').val('');
-        $('#txtf_update_summary').val(''); 
+        $('#txtf_update_summary').val('');
         $("#radb_update_minor").attr('checked', true);
 
     }).catch(function (error) {
         console.log(error);
-    }); 
+    });
 }
 
 
@@ -334,9 +352,9 @@ function getItemFromLocalStorage(key) {
 
 
 window.addEventListener('load', function () {
-    signInUnonymosly();
+    signInUnanimously();
     $("#btnn_send_now").click(function () {
         registerUpdateNotification();
-    }); 
+    });
 
 });
