@@ -50,6 +50,11 @@ function sendNotification(appVersion, appVersionUid, notificationTopic, priority
             updateSummary: updateSummary,
             updateLevel: updateLevel
         },
+        notification: {
+            title: versionName,
+            body: updateSummary
+        },
+
         topic: notificationTopic
 
     };
@@ -65,7 +70,7 @@ function sendNotification(appVersion, appVersionUid, notificationTopic, priority
     };
 
     //return admin.messaging().sendToTopic(notificationTopic, messagePayload, options);
-     
+
     // Send a message to devices subscribed to the provided topic.
     return admin.messaging().send(messagePayload)
         .then((response) => {

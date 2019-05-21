@@ -9,10 +9,9 @@ const firebaseConfig = {
     appId: "1:403747864547:web:90a6a1ddd4a7a416"
 };
 
-firebase.firestore().settings({ timestampsInSnapshots: true });
 
 firebase.initializeApp(firebaseConfig);
-
+ 
 // firebase.firestore().enablePersistence({ experimentalTabSynchronization: true })
 //   .then(() => { })
 //   .catch(function (err) { }); 
